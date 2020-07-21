@@ -54,7 +54,8 @@
 	.tabsAside[darkmode] .pane .collectionSet > .set > div
 	{
 		background-color: #0c0c0c;
-		background-image: url("chrome-extension://__MSG_@@extension_id__/images/tab_thumbnail_dark.png");
+		background-image: url("chrome-extension://__MSG_@@extension_id__/images/tab_thumbnail_dark.png"),
+						  url("moz-extension://__MSG_@@extension_id__/images/tab_thumbnail_dark.png");
 	}
 
 		.tabsAside[darkmode] .pane .collectionSet > .set > div > div
@@ -64,7 +65,8 @@
 
 			.tabsAside[darkmode] .pane .collectionSet > .set > div > div > div
 			{
-				background-image: url("chrome-extension://__MSG_@@extension_id__/images/tab_icon_dark.png");
+				background-image: url("chrome-extension://__MSG_@@extension_id__/images/tab_icon_dark.png"),
+								  url("moz-extension://__MSG_@@extension_id__/images/tab_icon_dark.png");
 			}
 
 	/* Context menu style */

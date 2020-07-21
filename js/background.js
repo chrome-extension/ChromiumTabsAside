@@ -63,7 +63,7 @@ chrome.browserAction.onClicked.addListener((tab) =>
 {
 	chrome.storage.sync.get({ "setAsideOnClick": false }, values => 
 	{
-		if (values.setAsideOnClick)
+		if (values?.setAsideOnClick)
 			SaveCollection();
 		else
 			TogglePane(tab);
@@ -87,6 +87,8 @@ chrome.contextMenus.create(
 );
 
 var collections = JSON.parse(localStorage.getItem("sets")) || [];
+var shortcuts;
+chrome.commands.getAll((commands) => shortcuts = commands);
 
 chrome.commands.onCommand.addListener(ProcessCommand);
 chrome.contextMenus.onClicked.addListener((info) => ProcessCommand(info.menuItemId));
@@ -116,6 +118,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) =>
 			RemoveTab(message.collectionIndex, message.tabIndex);
 			sendResponse();
 			break;
+		case "getShortcuts":
+			sendResponse(shortcuts);
+			break;
 	}
 });
 
@@ -139,10 +144,7 @@ function UpdateTheme()
 		});
 
 	// Updating badge counter
-	if (collections.length < 1)
-		chrome.browserAction.setBadgeText({ });
-	else
-		chrome.browserAction.setBadgeText({ text: collections.length.toString() });
+	chrome.browserAction.setBadgeText({ text: collections.length < 1 ? "" : collections.length.toString() });
 }
 
 UpdateTheme();
@@ -155,7 +157,7 @@ function SaveCollection()
 {
 	chrome.tabs.query({ currentWindow: true }, (rawTabs) =>
 	{
-		var tabs = rawTabs.filter(i => i.url != chrome.runtime.getURL("TabsAside.html") && !i.pinned && !i.url.includes("//newtab"));
+		var tabs = rawTabs.filter(i => i.url != chrome.runtime.getURL("TabsAside.html") && !i.pinned && !i.url.includes("//newtab") && !i.url.includes("about:"));
 
 		if (tabs.length < 1)
 		{
@@ -216,9 +218,9 @@ function RestoreCollection(collectionIndex, removeCollection)
 			},
 			(createdTab) =>
 			{
-				chrome.storage.sync.get({ "loadOnRestore" : false }, values => 
+				chrome.storage.sync.get({ "loadOnRestore" : true }, values => 
 				{
-					if (!values.loadOnRestore)
+					if (!(values?.loadOnRestore))
 						chrome.tabs.onUpdated.addListener(function DiscardTab(updatedTabId, changeInfo, updatedTab) 
 						{
 							if (updatedTabId === createdTab.id) {

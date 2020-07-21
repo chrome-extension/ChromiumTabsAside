@@ -96,7 +96,8 @@
 			background-repeat: no-repeat;
 			background-size: 13px;
 			background-position: center;
-			background-image: url("chrome-extension://__MSG_@@extension_id__/icons/arrowRight.svg");
+			background-image: url("chrome-extension://__MSG_@@extension_id__/icons/arrowRight.svg"),
+							  url("moz-extension://__MSG_@@extension_id__/icons/arrowRight.svg");
 		}
 
 		.tabsAside.pane > header > hr
@@ -172,7 +173,8 @@
 				margin: 5px;
 
 				background-color: #c2c2c2;
-				background-image: url("chrome-extension://__MSG_@@extension_id__/images/tab_thumbnail.png");
+				background-image: url("chrome-extension://__MSG_@@extension_id__/images/tab_thumbnail.png"),
+								  url("moz-extension://__MSG_@@extension_id__/images/tab_thumbnail.png");
 				background-size: cover;
 				background-position-x: center;
 
@@ -215,7 +217,8 @@
 						height: 20px;
 						margin: 10px;
 
-						background-image: url("chrome-extension://__MSG_@@extension_id__/images/tab_icon.png");
+						background-image: url("chrome-extension://__MSG_@@extension_id__/images/tab_icon.png"),
+										  url("moz-extension://__MSG_@@extension_id__/images/tab_icon.png");
 						background-size: 20px;
 					}
 
